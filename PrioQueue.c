@@ -19,12 +19,12 @@ struct PrioQueue
 
 PrioQueue* pqueue_new()
 {
-	PrioQueue *new = malloc(sizeof(PrioQueue));
+	PrioQueue *newelem = malloc(sizeof(PrioQueue));
 	
-	new->root = NULL;
-	new->size = 0;
+	newelem->root = NULL;
+	newelem->size = 0;
 	
-	return new;
+	return newelem;
 }
 
 q_elem* q_elem_new(int priority, char* name)
@@ -51,6 +51,10 @@ void pqueue_free(PrioQueue *queue)
 		
 		free(tmp);	
 	}
+
+	free(queue);
+
+	
 
 }
 
@@ -97,17 +101,20 @@ char* pqueue_offer(PrioQueue *queue, q_elem* newElem)
 		
 		if(newElem->priority > tmp2->priority){
 			
-			tmp1->next = newElem;
-			newElem->next = tmp2;	
+				
+			break;
+			
 		}
-		else{		
-			newElem->next = tmp2->next;
-			tmp2->next = newElem;
-		}
+			
+			
+		
 			
 		tmp1 = tmp1->next;
 		tmp2 = tmp2->next;
 	}
+
+		tmp1->next = newElem;
+			newElem->next = tmp2;
 	
 	return newElem->name;
 	
@@ -119,6 +126,7 @@ char* pqueue_peek(PrioQueue *queue)
 		return NULL;
 	}
 	
+	printf("peak : (%d,%s)\n",queue->root->priority,queue->root->name);
 	return queue->root->name;
 	
 }
