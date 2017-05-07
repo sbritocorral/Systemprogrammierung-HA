@@ -126,7 +126,7 @@ char* pqueue_peek(PrioQueue *queue)
 		return NULL;
 	}
 	
-	printf("peak : (%d,%s)\n",queue->root->priority,queue->root->name);
+	
 	return queue->root->name;
 	
 }
