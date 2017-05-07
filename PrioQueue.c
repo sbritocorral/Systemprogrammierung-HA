@@ -20,24 +20,31 @@ struct PrioQueue
 PrioQueue* pqueue_new()
 {
 	PrioQueue *new = malloc(sizeof(PrioQueue));
+	
+	new->root = NULL;
+	new->size = 0;
+	
 	return new;
 }
 
 q_elem* q_elem_new(int priority, char* name)
 {
-	q_elem * new_elem = malloc(sizeof(q_elem_s));
+	q_elem* new_elem = malloc(sizeof(q_elem));
 	
 	new_elem->priority = priority;	
-	strcpy(new_elem->name, name);
+	
+	new_elem->name = name;
+	
+	new_elem->next = NULL;
 	
 	return new_elem;
 }
 
 void pqueue_free(PrioQueue *queue)
 {
-	q_elem * tmp = null;
+	q_elem * tmp = NULL;
 	
-	while(queue->root != null){
+	while(queue->root != NULL){
 		
 		tmp= queue->root;
 		queue->root = queue->root->next;
@@ -50,17 +57,43 @@ void pqueue_free(PrioQueue *queue)
 char* pqueue_offer(PrioQueue *queue, q_elem* newElem)
 {
 	
+	if(newElem == NULL){
+		
+		return NULL;
+	}
+	
+	if(queue->root == NULL){
+		
+		queue->root = newElem;
+		queue->size++;
+		return newElem->name;
+	}
+	
+	queue->size++;
+	
+	
+	
+	
+	if(queue->root->next == NULL){
+		
+		if(newElem->priority > queue->root->priority){
+			
+			newElem->next = queue->root;
+			
+			queue->root = newElem;	
+		}
+		else{
+			
+			queue->root->next = newElem;	
+		}
+		
+		return newElem->name;
+	}
+	
 	q_elem *tmp1 = queue->root;
 	q_elem *tmp2 = queue->root->next;
 	
-	
-	if(queue->root->next != null){
-		
-		if(newElem->priority)
-		
-	}
-	
-	while(tmp2!=null){
+	while(tmp2!=NULL){
 		
 		if(newElem->priority > tmp2->priority){
 			
@@ -76,31 +109,62 @@ char* pqueue_offer(PrioQueue *queue, q_elem* newElem)
 		tmp2 = tmp2->next;
 	}
 	
+	return newElem->name;
 	
-	
-	return NULL;
 }
 
 char* pqueue_peek(PrioQueue *queue)
 {
-	//TODO
-	return NULL;
+	if(queue->root == NULL){
+		return NULL;
+	}
+	
+	return queue->root->name;
+	
 }
 
 char* pqueue_poll(PrioQueue *queue)
 {
-	//TODO
-	return NULL;
+	
+	if(queue->root == NULL){
+		return NULL;
+	}
+	
+	q_elem *tmp = queue->root;
+	
+	queue->root = queue->root->next;
+	
+	char name[strlen(tmp->name)];
+	
+	char*pointer = name;
+	
+	strcpy(pointer, tmp->name);
+	
+	free(tmp);
+	
+	queue->size--;
+	
+	return pointer;
+	
 }
 
 int pqueue_size(PrioQueue *queue)
 {
-	//TODO
-	return -1;
+	
+	return queue->size;
 }
 
 void pqueue_print(PrioQueue *queue)
 {
-	//TODO
+	q_elem *tmp = queue->root;
+	
+	while(tmp!=NULL){
+		
+		printf("(%d,%s)", tmp->priority, tmp->name);
+		
+		tmp = tmp->next;	
+	}
+	
+	
 }
 
