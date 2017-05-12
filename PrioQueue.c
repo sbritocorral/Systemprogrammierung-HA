@@ -99,16 +99,9 @@ char* pqueue_offer(PrioQueue *queue, q_elem* newElem)
 	
 	while(tmp2!=NULL){
 		
-		if(newElem->priority > tmp2->priority){
-			
-				
-			break;
-			
+		if(newElem->priority > tmp2->priority){	
+			break;	
 		}
-			
-			
-		
-			
 		tmp1 = tmp1->next;
 		tmp2 = tmp2->next;
 	}
@@ -142,12 +135,10 @@ char* pqueue_poll(PrioQueue *queue)
 	
 	queue->root = queue->root->next;
 	
-	char name[strlen(tmp->name)];
 	
-	char*pointer = name;
+	char*pointer = tmp->name;
 	
-	strcpy(pointer, tmp->name);
-	
+
 	free(tmp);
 	
 	queue->size--;
@@ -172,6 +163,7 @@ void pqueue_print(PrioQueue *queue)
 		
 		tmp = tmp->next;	
 	}
+	printf("\n");
 	
 	
 }
