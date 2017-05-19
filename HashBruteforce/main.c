@@ -11,9 +11,22 @@
 #include "utils.h"
 #include "bruteforce.h"
 
+pid_t pid,wpid;
+
+void signalProcessing(int signal)
+{
+   
+
+    kill(0, SIGINT);
+    
+}
+
+
 
 int main(int argc, char* argv[])
 {
+
+    int status = 0;
     // Process Commandline arguments
     if(argc != 5 || !strcmp("-h", argv[1]) || !strcmp("--help", argv[1]))
     {
@@ -29,6 +42,8 @@ int main(int argc, char* argv[])
     min_password_length = atoi(argv[3]);
     max_password_length = atoi(argv[4]);
 
+    int processing = -1;
+
 	/* CRACK THE FOLLOWING SHA256 HASH:
 
 		fab6b3381ec4dc44084b23206f3a1e7ea3b2fb795a0e5e01e42f6cff11d4c175
@@ -37,4 +52,69 @@ int main(int argc, char* argv[])
 
     /* HIER KÖNNTE IHRE IMPLEMENTIERUNG STEHEN */
 
+    
+
+
+    signal(SIGALRM,signalProcessing);
+
+    int z = 0;
+    int IDProcess = 0 ;
+
+    char  **bounds = malloc(sizeof(char *) * (process_count + 1));
+
+    split_work(bounds,26/process_count);
+
+    for(int i=0; i<process_count+1; i++)
+    {
+        printf("Contenido : %s\n",bounds[i]);
+    }
+
+    while(z < process_count)
+    {
+        processing++;
+        IDProcess++;
+        pid = fork();
+        
+        if(pid == 0) break;
+        
+        z++;
+    }
+
+    if(pid!=0)
+    {
+        
+      while((wpid = wait(&status)) > 0);
+    }
+   
+    if(pid == 0 )
+    {  
+        char *result = brute(argv[1],bounds[processing],bounds[processing + 1]);
+
+         if(result == NULL)
+        {
+            printf("I am procesor %d : \n",IDProcess);
+            printf("Me quede como una gueva trabajando\n");
+        }
+
+        if(result != NULL)
+        {
+            printf("I am the procesor number  : %d\n",IDProcess);
+            printf("I Cracked it!!! : %s\n",result);
+
+            kill(getppid(),SIGALRM);
+            
+        }
+
+       
+    
+    }
+
+    
+    
+
+return 0;
+
 }
+
+
+
