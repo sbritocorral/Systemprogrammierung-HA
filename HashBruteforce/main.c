@@ -13,10 +13,10 @@
 
 pid_t pid,wpid;
 
+
+//callback um die prozesse zu killen
 void signalProcessing(int signal)
 {
-   
-
     kill(0, SIGINT);
     
 }
@@ -54,26 +54,29 @@ int main(int argc, char* argv[])
 
     
 
-
+    //definiert die callback
     signal(SIGALRM,signalProcessing);
 
     int z = 0;
     int IDProcess = 0 ;
-
+    
+    
+    //definiert die variablen wo die arbeit gespeichert wird
     char  **bounds = malloc(sizeof(char *) * (process_count + 1));
+    //definirt dynamisch die hash 
+    char * target = malloc(strlen(argv[1]) + 1);
+    strcpy(target,argv[1]);
 
+    //aufteilung der arbeit abhaengig zu den prozess anzahl 
     split_work(bounds,26/process_count);
 
-    for(int i=0; i<process_count+1; i++)
-    {
-        printf("Contenido : %s\n",bounds[i]);
-    }
+   printf("I am cracking the password!\n")
 
     while(z < process_count)
     {
         processing++;
         IDProcess++;
-        pid = fork();
+        pid = fork(); // Neue prozess erstellen und damit raus gehen.
         
         if(pid == 0) break;
         
@@ -82,25 +85,26 @@ int main(int argc, char* argv[])
 
     if(pid!=0)
     {
-        
+        //warten auf alle prozessen
       while((wpid = wait(&status)) > 0);
     }
    
     if(pid == 0 )
     {  
+        //Bruteforce anfangen
         char *result = brute(argv[1],bounds[processing],bounds[processing + 1]);
 
          if(result == NULL)
         {
-            printf("I am procesor %d : \n",IDProcess);
-            printf("Me quede como una gueva trabajando\n");
+
+           
+            exit(0);
         }
 
         if(result != NULL)
         {
-            printf("I am the procesor number  : %d\n",IDProcess);
             printf("I Cracked it!!! : %s\n",result);
-
+            //sageb den Eltern , dass ich fertig bin
             kill(getppid(),SIGALRM);
             
         }
