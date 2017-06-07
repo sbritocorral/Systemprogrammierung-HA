@@ -1,5 +1,5 @@
 {
-    "RR_MAX_QUANTUM": 2,
+    "RR_MAX_QUANTUM": 4,
     "MLF_NUM_QUEUES": 1,
 
     "task_pool": [
@@ -19,7 +19,7 @@
             "name": "3",
             "color": "GREEN",
             "total_length": 4,
-            "arrival_tick": 4
+            "arrival_tick": 4   
         },
         {
             "name": "4",

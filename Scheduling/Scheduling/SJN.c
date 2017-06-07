@@ -57,4 +57,6 @@ while(!allDone(task_pool))
 
 queue_free(queue);
 
+printf("\n");
+
 }
