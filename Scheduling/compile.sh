@@ -2,6 +2,7 @@
 
 # Compiles all .c Files, which are in this directory and in the Task and Scheduling directory, so
 # there is no reason to edit it!
+
 gcc ./*.c ./Scheduling/*.c ./Tasks/*.c ./Queue/*.c -pthread -g -lm -o scheduler
 
 # alternative to remove fancy colors and to add a speedup to the execution
