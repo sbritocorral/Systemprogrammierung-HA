@@ -50,7 +50,7 @@ void schedule_RR(const TaskPool *task_pool, uint16_t quantum_max)
                     }
                 }
 
-                if (i != quantum - 1)
+                if (i != quantum - 1 && !isDone(tmp->task))
                 {
                     tick++;
                     Task *taskArrive = checkArrivals(task_pool, tick);
