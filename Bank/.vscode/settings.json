@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "parser.h": "c",
+        "calculation.c": "cpp",
+        "printer.c": "cpp",
+        "parser.c": "cpp"
+    }
+}
