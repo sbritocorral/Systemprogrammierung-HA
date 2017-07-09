@@ -12,6 +12,7 @@ typedef struct {
 
     int processNumber;
     int betriebsMitellNumber;
+    int sicher;
 
     int ** gesamtAnforderungenMatrix;
     int ** aktuelleBelegungenMatrix;
@@ -19,6 +20,8 @@ typedef struct {
     int ** restAnforderung;
     int ** freeMemoryAfter;
     int ** bankProof;
+    int ** operationen;
+    int countOperation;
 
 
 }information;
@@ -42,7 +45,12 @@ void parsingMatrixByReference(int ** matrix,char ** information, int init,int fi
 void freeMatrix(int column,int rows , int ** matrix);
 
 
-//void initMatrix(int ** matrix,int betriebsMitellNumber, int processNumber);
+void initMatrix(int ** matrix,int betriebsMitellNumber, int processNumber);
+
+void parsingMatrixOperation(int ** matrix,char ** information, int init,int final);
+
+
+
 
 
 

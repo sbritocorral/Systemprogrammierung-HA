@@ -81,6 +81,12 @@ information * getParsedInformation(file * fileToParse){
     }
      free(tempFileInfo);
 
+
+    //  for(int x = 0; x<counter ; x++)
+    //  {
+    //      printf("Here is the information %d  : %s\n",x,infoToParse[x]);
+    //  }
+
    int pN = getInfoNumber(infoToParse[0]);
    int bN = getInfoNumber(infoToParse[1]);
     
@@ -93,8 +99,11 @@ information * getParsedInformation(file * fileToParse){
     info->aktuelleBelegungenMatrix = createMatrix(info->processNumber,info->betriebsMitellNumber);
     info->memoryAvalible = createMatrix(1,info->betriebsMitellNumber);
     info->freeMemoryAfter = createMatrix(1,info->betriebsMitellNumber);
-   // info->bankProof = createMatrix(1,info->processNumber);
+    info->bankProof = createMatrix(1,info->processNumber);
+    initMatrix(info->bankProof,info->betriebsMitellNumber,info->processNumber);
     info->restAnforderung = createMatrix(info->processNumber,info->betriebsMitellNumber);
+    
+    
     
 
     int calculation = 2;
@@ -108,6 +117,26 @@ information * getParsedInformation(file * fileToParse){
 
      parsingMatrixByReference(info->memoryAvalible,infoToParse,calculation,calculation + 1);
      calculation++;
+
+     info->countOperation =  counter - calculation;
+
+     //printf("Esto es calculation menos counter : %d \n",info->countOperation);
+
+     info->operationen = createMatrix(info->countOperation,4);
+
+     parsingMatrixOperation(info->operationen,infoToParse,calculation,counter);
+     
+    //  for(int x = 0 ; x<info->countOperation - 1; x++)
+    //  {
+    //      printf("Operation %d : \n",x);
+    //      for(int y = 0 ; y<4 ; y++)
+    //      {
+
+    //          printf("%d ",info->operationen[x][y]);
+    //      }
+    //      printf("\n");
+
+    //  }
 
     freeParserInformation(infoToParse,counter);
    
@@ -153,6 +182,9 @@ void parsingMatrixByReference(int ** matrix,char ** information, int init,int fi
     }
 
 }
+
+
+
 
 int ** createMatrix(int column,int row){
 
@@ -220,7 +252,9 @@ void freeInfo(information * info)
 
     freeMatrix(1,0,info->freeMemoryAfter);
 
-    //freeMatrix(1,0,info->bankProof);
+    freeMatrix(1,0,info->bankProof);
+
+    freeMatrix(info->countOperation,4,info->operationen);
         
     free(info);
 }
@@ -239,17 +273,69 @@ void freeMatrix(int column,int rows , int ** matrix){
 }
 
 
-// void  initMatrix(int ** prevProof,int betriebsMitellNumber, int processNumber){
+void  initMatrix(int ** prevProof,int betriebsMitellNumber, int processNumber){
 
     
-//      for(int x = 0 ; x<processNumber ; x++ )
-//         {
-//             for(int y = 0 ; y<betriebsMitellNumber ; y++)
-//             {
-//              prevProof[x][y] = -1;
-//             }
-//         }
+    
+            for(int y = 0 ; y<processNumber ; y++)
+            {
+             prevProof[0][y] = 0;
+            }
+        
 
 
-// }
+}
 
+
+void parsingMatrixOperation(int ** matrix,char ** information, int init,int final)
+{
+
+    for(int x = init ; x< final ; x++)
+    {
+        const char * delim = " ";
+        int  y = 0;
+        //printf("Esto es lo que se va a parsear info : %s\n",information[x] );
+        char * token = strtok(information[x],delim);
+
+        
+        while(token != NULL)
+        {
+
+
+            if(token[0] == 'R' || token[0] == 'A')
+            {
+
+                
+
+                //printf("Entre en el parseo de la letra y su valor sera %d \n",(int)token[0]);
+
+                matrix[x-init][y] = (int)token[0];
+
+                //printf("El valor actual despues de hacer todo %d \n",matrix[x-init][y]);
+
+                //printf("Esto es x-init : %d y esto es y : %d\n",x-init,y);
+
+                y++;
+
+
+            }else if(token[0] >= 48 && token[0] <= 57)
+            {
+
+                // printf("Esto es token !!! : %d \n",atoi(token)); 
+                // printf("Esto es x menos init %d \n",x-init);
+                // printf("Esto es y :  %d\n" , y );
+                // printf("\n");
+                matrix[x-init][y] = atoi(token);
+                y++;
+
+            }
+           
+          
+           token = strtok(NULL,delim);
+           
+        }
+    }
+
+
+
+}

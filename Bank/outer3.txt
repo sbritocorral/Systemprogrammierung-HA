@@ -1,0 +1,75 @@
+Prozesse:  4 / Betriebsmittel:  4
+
+Gesamtanforderungen:
+ 3  0  3  3
+ 1  3  0  1
+ 0  2  4  0
+ 0  1  0  3
+
+Belegungen:
+ 0  0  0  0
+ 0  0  0  0
+ 0  0  0  0
+ 0  0  0  0
+
+verfügbar:  4  4  4  4
+
+Restanforderungen:
+ 3  0  3  3
+ 1  3  0  1
+ 0  2  4  0
+ 0  1  0  3
+
+frei:  4  4  4  4
+
+SICHER
+Operation: A 0 0 3
+
+Restanforderungen:
+ 0  0  3  3
+ 1  3  0  1
+ 0  2  4  0
+ 0  1  0  3
+
+f:  1  4  4  4
+
+Operation: A 0 3 2
+
+Restanforderungen:
+ 0  0  3  1
+ 1  3  0  1
+ 0  2  4  0
+ 0  1  0  3
+
+f:  1  4  4  2
+
+Operation: A 1 1 3
+
+Restanforderungen:
+ 0  0  3  1
+ 1  0  0  1
+ 0  2  4  0
+ 0  1  0  3
+
+f:  1  1  4  2
+
+Operation: A 1 3 1
+
+Restanforderungen:
+ 0  0  3  1
+ 1  0  0  0
+ 0  2  4  0
+ 0  1  0  3
+
+f:  1  1  4  1
+
+Operation: A 2 2 3
+
+Restanforderungen:
+ 0  0  3  1
+ 1  0  0  0
+ 0  2  1  0
+ 0  1  0  3
+
+f:  1  1  1  1
+
